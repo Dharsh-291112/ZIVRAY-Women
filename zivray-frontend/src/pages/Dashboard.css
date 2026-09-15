@@ -1,0 +1,94 @@
+.zv-app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--zv-cream);
+}
+
+.zv-main-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.zv-main-content {
+  padding: 28px 32px;
+  flex: 1;
+}
+
+.zv-welcome-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--zv-rose);
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.zv-hero-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--zv-maroon);
+  margin: 0 0 24px;
+}
+
+.zv-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.zv-panel-card {
+  background: #fff;
+  border-radius: var(--zv-radius-md);
+  padding: 18px 20px;
+  box-shadow: 0 6px 20px rgba(90, 31, 46, 0.06);
+}
+
+.zv-panel-card h3 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--zv-text);
+}
+
+.zv-badge {
+  font-size: 0.68rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.zv-badge-urgent { background: #fbeceb; color: #b3453f; }
+.zv-badge-complete { background: #e7f3ea; color: #3f8354; }
+
+.zv-chat-widget {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 480px;
+}
+
+.zv-chat-history {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.zv-chat-bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 0.85rem;
+}
+
+.zv-chat-bubble--bot { background: #fff; align-self: flex-start; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+.zv-chat-bubble--user { background: var(--zv-maroon); color: #fff; align-self: flex-end; }
+
+.zv-chat-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
