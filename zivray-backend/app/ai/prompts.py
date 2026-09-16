@@ -19,3 +19,11 @@ def build_prompt(user_message: str, patient_context: dict) -> str:
         f"{SYSTEM_PROMPT}\n\nPatient context:\n{context_block}\n\n"
         f"Patient message: {user_message}\n\nRespond helpfully:"
     )
+def build_suggestions_prompt(patient_context: dict) -> str:
+    return (
+        f"{SYSTEM_PROMPT}\n\nPatient context: {patient_context}\n\n"
+        "Suggest exactly 4 short, useful questions this patient could ask about "
+        "general health, medical records, appointments, or symptoms. Return only "
+        "a JSON array of strings. Do not include diagnosis, treatment, or emergency "
+        "claims in the suggestions."
+    )

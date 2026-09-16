@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 
@@ -8,14 +9,16 @@ from app.security.auth import create_access_token
 
 
 def register_user(db: Session, payload: RegisterRequest) -> User:
-    existing = db.query(User).filter(User.email == payload.email).first()
+    email = str(payload.email).strip().lower()
+    phone = payload.phone.strip() if payload.phone else None
+    existing = db.query(User).filter(func.lower(User.email) == email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
 
     user = User(
         full_name=payload.full_name,
-        email=payload.email,
-        phone=payload.phone,
+        email=email,
+        phone=phone,
         password_hash=hash_password(payload.password),
         role=UserRole(payload.role),
         specialization=payload.specialization,
@@ -28,10 +31,11 @@ def register_user(db: Session, payload: RegisterRequest) -> User:
 
 
 def authenticate_user(db: Session, payload: LoginRequest) -> User:
+    identifier = payload.identifier.strip()
     user = (
         db.query(User)
         .filter(
-            (User.email == payload.identifier) | (User.phone == payload.identifier)
+            (func.lower(User.email) == identifier.lower()) | (User.phone == identifier)
         )
         .first()
     )

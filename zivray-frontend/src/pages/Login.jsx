@@ -16,6 +16,14 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    if (!identifier.trim()) {
+      setError('Email / Phone is required.')
+      return
+    }
+    if (!password) {
+      setError('Password is required.')
+      return
+    }
     setLoading(true)
     try {
       const data = await loginRequest({ identifier, password, role })
@@ -30,7 +38,7 @@ export default function Login() {
 
   return (
     <div className="zv-login-page">
-      <FigureColumn side="left" />
+      <IllustrationPanel side="left" />
 
       <div className="zv-login-card">
         <h1 className="zv-brand">ZIVRAY</h1>
@@ -62,7 +70,9 @@ export default function Login() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <input
+            <label className="zv-sr-only" htmlFor="login-identifier">Email / Phone</label>
+            <input
+              id="login-identifier"
             className="zv-input"
             type="text"
             placeholder="Email / Phone"
@@ -70,7 +80,9 @@ export default function Login() {
             onChange={(e) => setIdentifier(e.target.value)}
             required
           />
-          <input
+            <label className="zv-sr-only" htmlFor="login-password">Password</label>
+            <input
+              id="login-password"
             className="zv-input"
             type="password"
             placeholder="Password"
@@ -79,10 +91,10 @@ export default function Login() {
             required
           />
 
-          {error && <p className="zv-error">{error}</p>}
+          {error && <p className="zv-error" role="alert">{error}</p>}
 
           <button className="zv-signin-btn" type="submit" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign In'}
+            {loading ? <><span className="zv-spinner" aria-hidden="true" /> Signing in...</> : 'Sign In'}
           </button>
         </form>
 
@@ -93,7 +105,7 @@ export default function Login() {
         </div>
       </div>
 
-      <FigureColumn side="right" />
+      <IllustrationPanel side="right" />
     </div>
   )
 }
@@ -105,22 +117,10 @@ export default function Login() {
  * Swap the background image below for your own licensed illustration
  * if you'd like an exact visual match to a reference file.
  */
-function FigureColumn({ side }) {
-  const figures = side === 'left'
-    ? [0, 1, 2, 3, 4, 5]
-    : [0, 1, 2, 3, 4, 5]
-
+function IllustrationPanel({ side }) {
   return (
-    <div className={`zv-figure-col zv-figure-col--${side}`} aria-hidden="true">
-      {figures.map((i) => (
-        <div key={i} className={`zv-silhouette zv-silhouette-${i % 4}`}>
-          <div className="zv-silhouette-head" />
-          <div className="zv-silhouette-body" />
-        </div>
-      ))}
-      <div className="zv-sparkle zv-sparkle-1" />
-      <div className="zv-sparkle zv-sparkle-2" />
-      <div className="zv-sparkle zv-sparkle-3" />
+    <div className={`zv-illustration-panel zv-illustration-panel--${side}`} aria-hidden="true">
+      <img src={`/assets/zivray-login-${side}.png`} alt="" />
     </div>
   )
 }

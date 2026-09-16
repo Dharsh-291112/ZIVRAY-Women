@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="ZIVRAY AI">
+  <circle cx="128" cy="128" r="116" fill="#fff7fb"/>
+  <path d="M151 45c-37 1-67 28-72 63-5 33 12 49 10 76-1 14 5 26 17 32" fill="none" stroke="#70455f" stroke-width="10" stroke-linecap="round"/>
+  <path d="M89 113c12-22 42-25 66-43 12-9 15-18 8-28M91 153c10 27 29 37 52 38" fill="none" stroke="#70455f" stroke-width="10" stroke-linecap="round"/>
+  <path d="M164 83c18 10 22 26 20 40l16 13-16 7c-3 26-20 45-43 48" fill="none" stroke="#70455f" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m133 84 7 17 17 7-17 7-7 18-7-18-17-7 17-7z" fill="#e86da9"/>
+</svg>

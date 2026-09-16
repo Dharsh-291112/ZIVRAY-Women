@@ -1,8 +1,8 @@
 import uuid
-from datetime import datetime
+from datetime import date, datetime
 
 from sqlalchemy import (
-    Column, String, Boolean, DateTime, ForeignKey, Text, Enum, Integer
+    Column, String, Boolean, Date, DateTime, ForeignKey, Text, Enum, Integer
 )
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
@@ -95,3 +95,35 @@ class HealthAnalytic(Base):
     metric_name = Column(String(100), nullable=False)   # e.g. Hemoglobin, Cycle Length
     metric_value = Column(String(50), nullable=False)
     recorded_at = Column(DateTime, default=datetime.utcnow)
+
+
+class CycleEvent(Base):
+    __tablename__ = "cycle_events"
+
+    id = Column(UUID(as_uuid=False), primary_key=True, default=gen_uuid)
+    patient_id = Column(UUID(as_uuid=False), ForeignKey("users.id"), nullable=False, index=True)
+    event_date = Column(Date, nullable=False)
+    event_type = Column(String(30), nullable=False)  # period / fertile_window / pregnancy
+    notes = Column(String(300), nullable=True)
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id = Column(UUID(as_uuid=False), primary_key=True, default=gen_uuid)
+    patient_id = Column(UUID(as_uuid=False), ForeignKey("users.id"), nullable=False, index=True)
+    sender = Column(String(10), nullable=False)  # user / bot
+    message = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class FaceAnalysisLedger(Base):
+    __tablename__ = "face_analysis_ledger"
+
+    id = Column(UUID(as_uuid=False), primary_key=True, default=gen_uuid)
+    user_id = Column(UUID(as_uuid=False), ForeignKey("users.id"), nullable=False, index=True)
+    event_type = Column(String(80), nullable=False)
+    payload_hash = Column(String(64), nullable=False)
+    previous_hash = Column(String(64), nullable=False)
+    entry_hash = Column(String(64), nullable=False, unique=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

@@ -71,7 +71,7 @@ export default function Dashboard() {
               </div>
 
               <p style={{ marginTop: 24, fontSize: '0.85rem', color: 'var(--zv-muted)' }}>
-                Use the sidebar to open your Health Vault, AI Insights, Provider Hub, or upload a new document.
+                Use the sidebar to open your Health Vault, AI Insights, or Provider Hub.
               </p>
             </>
           )}

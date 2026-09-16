@@ -1,3 +1,5 @@
+import { apiBaseURL } from '../services/api.js'
+
 export default function MedicalCard({ record }) {
   return (
     <div className="zv-panel-card">
@@ -12,6 +14,16 @@ export default function MedicalCard({ record }) {
       </p>
       {record.ai_summary && (
         <p style={{ margin: '8px 0 0', fontSize: '0.82rem' }}>{record.ai_summary}</p>
+      )}
+      {record.file_url && (
+        <a
+          href={record.file_url.startsWith('http') ? record.file_url : `${apiBaseURL}/${record.id}/file`}
+          target="_blank"
+          rel="noreferrer"
+          className="zv-link"
+        >
+          Open document
+        </a>
       )}
     </div>
   )

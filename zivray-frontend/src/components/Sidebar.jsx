@@ -5,9 +5,9 @@ import './Sidebar.css'
 
 const NAV_ITEMS = [
   { to: '/records', label: 'My Health Vault', icon: '🗂️' },
-  { to: '/records#analytics', label: 'AI Insights', icon: '📊' },
+  { to: '/insights', label: 'AI Insights', icon: '📊' },
   { to: '/appointments', label: 'Provider Hub', icon: '🩺' },
-  { to: '/records#upload', label: 'Upload Documents', icon: '⬆️' },
+  { to: '/derma-test', label: 'Derma Test', icon: '🔍' },
 ]
 
 export default function Sidebar({ open, onToggle }) {

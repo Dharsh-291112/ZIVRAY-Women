@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS notifications CASCADE;
 DROP TABLE IF EXISTS appointments CASCADE;
 DROP TABLE IF EXISTS medical_records CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS face_analysis_ledger CASCADE;
 
 CREATE TYPE user_role AS ENUM ('patient', 'doctor');
 
@@ -63,11 +64,40 @@ CREATE TABLE health_analytics (
     recorded_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE cycle_events (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    patient_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    event_date DATE NOT NULL,
+    event_type VARCHAR(30) NOT NULL,       -- period | fertile_window | pregnancy
+    notes VARCHAR(300)
+);
+
+CREATE TABLE chat_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    patient_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    sender VARCHAR(10) NOT NULL,             -- user / bot
+    message TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE face_analysis_ledger (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    event_type VARCHAR(80) NOT NULL,
+    payload_hash VARCHAR(64) NOT NULL,
+    previous_hash VARCHAR(64) NOT NULL,
+    entry_hash VARCHAR(64) UNIQUE NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
 CREATE INDEX idx_records_patient ON medical_records(patient_id);
 CREATE INDEX idx_appt_patient ON appointments(patient_id);
 CREATE INDEX idx_appt_doctor ON appointments(doctor_id);
 CREATE INDEX idx_notif_user ON notifications(user_id);
 CREATE INDEX idx_analytics_patient ON health_analytics(patient_id);
+CREATE INDEX idx_cycle_events_patient ON cycle_events(patient_id);
+CREATE INDEX idx_chat_messages_patient ON chat_messages(patient_id);
+CREATE INDEX idx_face_analysis_ledger_user ON face_analysis_ledger(user_id);
 
 -- ---------------------------------------------------------------
 -- Sample users: do NOT insert plaintext or guessed bcrypt hashes here.

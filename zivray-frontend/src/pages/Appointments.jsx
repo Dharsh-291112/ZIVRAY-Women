@@ -7,6 +7,12 @@ import { fetchAppointments, bookAppointment } from '../services/appointmentServi
 import { useAuth } from '../context/AuthContext.jsx'
 import './Dashboard.css'
 
+const suggestedDoctors = [
+  { name: 'Dr. Alisha Patel', specialty: 'Obstetrics & Gynecology', rating: '4.9', reviews: '128', image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=240&q=80', detail: 'Warm, thoughtful care for every stage of your journey.' },
+  { name: 'Dr. Maya Chen', specialty: 'Endocrinology', rating: '4.8', reviews: '94', image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=240&q=80', detail: 'Specialist in thyroid, hormone, and metabolic health.' },
+  { name: 'Dr. Noor Ibrahim', specialty: 'Cardiology', rating: '4.9', reviews: '116', image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=240&q=80', detail: 'Preventive heart care with a calm, clear approach.' },
+]
+
 export default function Appointments() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [appointments, setAppointments] = useState([])
@@ -36,6 +42,19 @@ export default function Appointments() {
         <Navbar />
         <main className="zv-main-content">
           <h1 className="zv-hero-title">Provider Hub</h1>
+
+          <section className="zv-doctor-section">
+            <div className="zv-section-heading"><div><p className="zv-welcome-eyebrow">Care, matched to you</p><h3>Suggested doctors</h3></div><span className="zv-muted-text">Scroll to explore</span></div>
+            <div className="zv-doctor-scroller">
+              {suggestedDoctors.map((doctor) => (
+                <article className="zv-doctor-card" key={doctor.name}>
+                  <img src={doctor.image} alt={doctor.name} />
+                  <div className="zv-doctor-info"><strong>{doctor.name}</strong><span>{doctor.specialty}</span><span className="zv-doctor-rating">★ {doctor.rating} <small>({doctor.reviews})</small></span></div>
+                  <div className="zv-doctor-detail"><strong>{doctor.name}</strong><p>{doctor.detail}</p><span>Available for new patients</span></div>
+                </article>
+              ))}
+            </div>
+          </section>
 
           {user?.role === 'patient' && (
             <section style={{ marginBottom: 28 }}>

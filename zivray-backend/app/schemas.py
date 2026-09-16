@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from typing import Optional, List
 from pydantic import BaseModel, EmailStr, field_validator
 
@@ -119,6 +119,25 @@ class HealthAnalyticOut(BaseModel):
         from_attributes = True
 
 
+class HealthAnalyticCreate(BaseModel):
+    metric_name: str
+    metric_value: str
+    recorded_at: Optional[datetime] = None
+
+
+class CycleEventCreate(BaseModel):
+    event_date: date
+    event_type: str
+    notes: Optional[str] = None
+
+
+class CycleEventOut(CycleEventCreate):
+    id: str
+
+    class Config:
+        from_attributes = True
+
+
 # ---------- CHATBOT ----------
 
 class ChatRequest(BaseModel):
@@ -127,3 +146,17 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     reply: str
+
+
+class ChatMessageOut(BaseModel):
+    id: str
+    sender: str
+    message: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class ChatSuggestionsResponse(BaseModel):
+    suggestions: List[str]
